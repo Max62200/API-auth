@@ -3,10 +3,15 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 
 const appPort = process.env.APP_PORT || 3500;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 const start = async () => {
 	try {
@@ -24,4 +29,4 @@ start();
 
 // Routes
 // On définit les routes de l'application
-app.use('/api/v1/users', userRoutes);
+app.use('/api/', userRoutes);

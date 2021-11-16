@@ -5,7 +5,11 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 // On définit le chemin de la route
-router.get('/', userController.getAllUsers);
+router.get('/users/', userController.getAllUsers);
+
+router.post('/users/register/', userController.register);
+
+router.post('/users/login/', userController.login);
 
 // On exporte le router
 module.exports = router;

@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
 			],
 			unique: true,
 		},
+		bio: {
+			type: String,
+			required: false,			
+			maxlength: [512, "Votre biographie ne peut contenir plus de 512 caractères"],
+		},
 		password: {
 			type: String,
 			required: [true, 'Merci de fournir un mot de passe'],
