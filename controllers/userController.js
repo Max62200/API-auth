@@ -9,6 +9,7 @@ module.exports = {
 
 	// Permet de récupérer tous les utilisateurs
 	getAllUsers: async (req, res) => {
+		
 		// Déclaration de la variable users qui contiendra tous les utilisateurs
 		const users = await userModel.find();
 		// On renvoie la réponse au client
