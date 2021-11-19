@@ -2,7 +2,7 @@
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('../config/jwt.config');
-const  models  = require('mongoose');
+const PASSWORD_REGEX = /^(?=.*\d).{4,12}$/;
 
 // Export du module userController et ses fonctions.
 module.exports = {
@@ -26,6 +26,14 @@ module.exports = {
 
 		if (name == null || email == null || password == null) {
 			return res.status(400).json({'error':'missing parameters'});
+		}
+
+		if (name.length >= 13 || name.length <= 3){
+			return res.status(400).json({'error': "wrong username length (3 - 12)"})
+		}
+
+		if (!PASSWORD_REGEX.test(password)){
+			return res.status(400).json({ 'error': 'password invalid (length 4 - 12 and include 1 number'})
 		}
 
 		userModel.findOne({email:email})
@@ -99,6 +107,57 @@ module.exports = {
 		})
 
 
+	},
+
+	// afficher un profil
+	getUserProfile: function(req, res){
+
+		const headerAuth = req.headers['authorization'];
+		const userId = jwt.getUserId(headerAuth);
+
+		if (userId < 0){
+			return res.status(400).json({ 'error': 'wrong token'});
+		}
+
+		userModel.findOne({ id: userId }, '-password'
+		).then(function(user){
+			if (user){
+				res.status(201).json(user);
+			}else{
+				res.status(404).json({'error': 'user not found'});
+			}
+		}).catch(function(err){
+			res.status(500).json({ 'error': 'connot fetch user'});
+		});
+
+	},
+
+	// modifier un profil
+	updateUserProfile: function(req, res){
+
+		const headerAuth = req.headers['authorization'];
+		const userId = jwt.getUserId(headerAuth);
+
+		let bio = req.body.bio;
+
+		if (userId < 0){
+			return res.status(400).json({ 'error': 'wrong token'});
+		}
+
+		userModel.findOne({ id: userId })
+		.then(function(userFound){
+			if(userFound){
+				userFound.update({
+					bio: (bio ? bio : userFound.bio)
+				}).then(function(userFound){
+					return res.status(201).json(userFound);
+				}).catch(function(err){
+					res.status(500).json({ 'error': 'cannot update user'});
+				});
+			}else{
+				res.status(404).json({ 'error': 'user not found'});
+			}
+		})
 	}
 
 

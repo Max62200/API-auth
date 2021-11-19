@@ -11,6 +11,10 @@ router.post('/users/register/', userController.register);
 
 router.post('/users/login/', userController.login);
 
+router.get('/users/me/', userController.getUserProfile);
+
+router.put('/users/me/', userController.updateUserProfile);
+
 // On exporte le router
 module.exports = router;
 
