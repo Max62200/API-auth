@@ -43,20 +43,21 @@ module.exports = {
 			if (!userFound){
 				bcrypt.hash(password, 5, function(err, bcryptedPassword){
 
-					let newUser = userModel.create({
-						name: name,
-						email: email,
-						bio: bio,
-						password: bcryptedPassword
-					})
-					.then(function(newUser){
+					
+					
+					
+						const newUser = userModel.create({
+							name: name,
+							email: email,
+							bio: bio,
+							password: bcryptedPassword});
+
+							
 						return res.status(201).json({
 							'userId': newUser.id
 						})
-					})
-					.catch(function(err){
-						return res.status(500).json({ 'error': 'cannot add user'});
-					})
+					
+					
 
 				});
 			} else {

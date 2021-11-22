@@ -1,4 +1,5 @@
 
+
 const operationForm = document.getElementById("form");
 const operationFormLog = document.getElementById("formlog");
 
@@ -29,15 +30,18 @@ if (operationForm != null){
       .then((data) => {
         console.log(data);
         if (data.status === 201) {
-          alert("Successfully Registered");
+          alert("COMPTE CREE AVEC SUCCES");
           window.location.replace(`/front/login.html`);
         } else {
-          alert("Sorry, email has already been taken.");
+          document.querySelector(".alert").innerHTML = `
+          <H1 id="alerting">!! USER ALREADY EXIST !!</H1>
+          `
         }
       })
       .catch((err) => {
-        alert("This is a warning message!");
-        console.error(err);
+        document.querySelector(".alert").innerHTML = `
+            <H1 id="alerting">!! ! SERVER ISSUE ! !!</H1>
+            `
       });
   });
   
@@ -66,10 +70,34 @@ if (operationFormLog != null){
     fetch("http://localhost:3500/api/users/login", options)
       .then((res) =>
         res.json()
-        .then((response) => ({status: res.status, response },
-           localStorage.setItem("token", JSON.stringify(response.token)),
-          window.location.replace(`/front/me.html?${response.userId}`))))
+        .then((response) => ({status: res.status, response })))
+        .then((res) =>{
+          console.log(res);
+          if(res.status === 200){
+            localStorage.setItem("token", JSON.stringify(res.response.token));
+            window.location.replace(`/front/me.html?${res.response.userId}`);
+
+          }
+          if(res.status === 403){
+            document.querySelector(".alert").innerHTML = `
+            <H1 id="alerting">!!! WRONG PASSWORD !!!</H1>
+            `
+          }
+          if(res.status === 404){
+            document.querySelector(".alert").innerHTML = `
+            <H1 id="alerting">!! ! USER UNKNOWN ! !!</H1>
+            `
+          }
+
+        });
+
+          
+
+            
+  });
+          
+          
       
-    }); 
+    
 };
 

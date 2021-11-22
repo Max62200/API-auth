@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: [true, 'Merci de fournir un mot de passe'],
 			minlength: 3,
-			maxlength: 13,
+			maxlength: 60,
 		},
 	},
 	{

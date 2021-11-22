@@ -12,7 +12,10 @@ const appPort = process.env.APP_PORT || 3500;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+	origin: '*',
+	methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}));
 
 async function start() {
 	try {

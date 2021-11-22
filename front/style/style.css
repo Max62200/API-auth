@@ -271,3 +271,38 @@ body{
     animation-iteration-count: 4;
     animation-delay: 3s;
 }
+
+#alerting{
+
+    position: absolute;
+    margin-top: 18%;
+    margin-left: 14%;
+    height: 500px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 10px;
+    font-size: 120px;
+    color: red;
+    opacity: 0;
+    z-index: -2000;
+    animation-name: message;
+    animation-duration: 1s;
+    animation-iteration-count: 5;
+    
+}
+
+@keyframes message{
+    from{
+        transform: scale(1);
+        opacity: 1;
+        z-index: 2000;
+
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    to{
+        transform: scale(1);
+        opacity: 1;
+        z-index: 2000;
+    }
+}
