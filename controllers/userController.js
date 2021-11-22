@@ -121,7 +121,7 @@ module.exports = {
 			return res.status(400).json({ 'error': 'wrong token'});
 		}
 
-		userModel.findOne({ id: userId }, '-password'
+		userModel.findOne({ _id: userId }, '-password'
 		).then(function(user){
 			if (user){
 				res.status(201).json(user);
@@ -146,7 +146,7 @@ module.exports = {
 			return res.status(400).json({ 'error': 'wrong token'});
 		}
 
-		userModel.findOne({ id: userId })
+		userModel.findOne({ _id: userId })
 		.then(function(userFound){
 			if(userFound){
 				userFound.update({

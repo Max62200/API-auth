@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: [true, "Merci de fournir un nom d'utilisateur"],
 			minlength: [3, "Le nom d'utilisateur doit contenir au moins 3 caractères"],
-			maxlength: [12, "Le nom d'utilisateur ne doit pas dépasser 12 caractères"],
+			maxlength: [25, "Le nom d'utilisateur ne doit pas dépasser 25 caractères"],
 		},
 		email: {
 			type: String,
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: [true, 'Merci de fournir un mot de passe'],
 			minlength: 3,
-			maxlength: 255,
+			maxlength: 13,
 		},
 	},
 	{
