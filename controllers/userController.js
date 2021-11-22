@@ -24,12 +24,14 @@ module.exports = {
 		let bio = req.body.bio;
 		let password = req.body.password;
 
-		if (name == null || email == null || password == null) {
+		
+	
+		if (name === null || email === null || password === null) {
 			return res.status(400).json({'error':'missing parameters'});
 		}
 
-		if (name.length >= 13 || name.length <= 3){
-			return res.status(400).json({'error': "wrong username length (3 - 12)"})
+		if (name.length >= 25 || name.length <= 3){
+			return res.status(400).json({'error': "wrong username length (3 - 25)"})
 		}
 
 		if (!PASSWORD_REGEX.test(password)){

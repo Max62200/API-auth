@@ -1,31 +1,43 @@
   
-const Url = "http://localhost:3500/api/users";
-const form = document.getElementById('form');
+const url = "http://localhost:3500/api/users/register";
+const operationForm = document.getElementById('form');
 
-form.addEventListener('submit',(e)=>{
+operationForm.addEventListener('submit',function(e){
     e.preventDefault();
-    console.log('OK')
-    const formData = new FormData(form);
-    const dataInsert = Object.fromEntries(formData.entries());
-  
-    console.log(dataInsert);
-  
-    const options = {
-      method: "POST",
-      body: JSON.stringify(dataInsert),
-      headers: { "Content-Type": "application/json"},
+    
+    
+    const dataInsert = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      bio: document.getElementById('bio').value,
+      password: document.getElementById('password').value,
       
-      redirect: 'follow'
+    };
+  
+    console.log(JSON.stringify(dataInsert));
+  
+    let options = {
+      method: "post",
+      body: JSON.stringify(dataInsert),
+      headers: { "Content-Type": "application/json", Accept:"application/json"},
+     
+      
     };
     
-  fetch(Url,options)
-    .then(response=>response.json().then(json => {
-        if (response == 404){
-           console.log('error')}
-            else{
-              console.log(json)
-            
-            }
-          
-    }) ) 
-})
+    
+
+  fetch("http://localhost:3500/api/users/register", options )
+    .then(res => res.json().then((response => ({status:res.status, response}))))
+    .then(data =>  { 
+        console.log(data);
+        if(data.status === 201){
+            alert("Successfully Registered"); 
+        } else{
+            alert("Sorry, email has already been taken.");
+        } 
+    })
+    .catch((err) => {
+         alert ("This is a warning message!");
+        console.error(err);
+    });
+});
